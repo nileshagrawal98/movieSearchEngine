@@ -42,6 +42,7 @@
             background-color: #34495E;
             margin: auto;
             padding: 15px;
+            box-shadow: 0 0 10px #2d3d4d;
         }
 
         #movie_area img {
@@ -63,6 +64,16 @@
             font-size: 30px;
             font-weight: 700;
             margin-bottom: 0;
+        }
+
+        #details>p:nth-of-type(1) > span {
+            background-color: #2980B9;
+            font-size: 15px;
+            font-weight: 700;
+            vertical-align: middle;
+            margin-left: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
 
         #details>p:nth-of-type(2),
@@ -141,6 +152,12 @@
 
         let title = document.createElement("p");
         title.innerText = data.Title;
+
+        if(Number(data.imdbRating) > 8.5){
+            let span = document.createElement("span");
+            span.innerText = "Recommended";
+            title.append(span);
+        }
 
         let imdb = document.createElement("p");
         imdb.innerText = "IMDb Rating: " + data.imdbRating;

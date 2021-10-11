@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Search</title>
+    <style>
+        body{
+            background-color: #2C3E50;
+        }
+        #search_bar{
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #search_bar > input{
+            max-width: 600px;
+            width: 60%;
+            padding: 5px;
+            margin-right: 10px;
+            height: 25px;
+            color: #2980B9;
+        }
+
+        #search_bar > button{
+            background-color: #2980B9;
+            border: 0;
+            border-radius: 5px;
+            color: white;
+            padding: 10px;
+        }
+
+        #movie_area{
+            display: none;
+            max-width: 1200px;
+            background-color: #34495E;
+            margin: auto;
+            padding: 15px;
+        }
+
+        #movie_area img{
+            width: 100%;
+        }
+
+        #movie_area > div{
+            display: flex;
+            column-gap: 10px;
+        }
+
+        #details{
+            color: white;
+            font-size: 20px;
+        }
+
+        #details > p:nth-of-type(1){
+            margin-top: 0;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        #details > p:nth-of-type(2), #details > p:nth-of-type(3){
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        #details > div:nth-of-type(1) > div{
+            display: flex;
+            column-gap: 20px;
+            margin: 0px 0px;
+        }
+        #details > div:nth-of-type(1) > h4{
+            margin-bottom: 10px;
+        }
+        #details > div:nth-of-type(1) > div > p{
+            margin: 10px 0px;
+        }
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+    <div id="search_bar">
+        <input type="text" id="movie" placeholder="Enter Movie Name" />
+        <button onclick="requestData()">Search Movie</button>
+    </div>
+
+    <div id="movie_area">
+        <h2 id="movie_name"></h2>
+
+    </div>
+
+
+
+
+</body>
+
+<script>
+
+    async function requestData() {
+        let movie = document.getElementById("movie").value;
+
+        let res = await fetch(`http://www.omdbapi.com/?apikey=ce0b3791&t=${movie}`);
+
+        let data = await res.json();
+        console.log(data);
+
+        showMovie(data);
+
+        document.getElementById("movie_area").style.display = "block";
+
+    }
+
+    function showMovie(data) {
+
+        let movie_area = document.getElementById("movie_area");
+
+        movie_area.innerHTML = "";
+
+        let container = document.createElement("div");
+
+        let div1 = document.createElement("div");
+        let image = document.createElement("img");
+        image.src = data.Poster;
+
+        div1.append(image);
+
+        let div2 = document.createElement("div");
+        div2.id = "details";
+
+        let date = document.createElement("p");
+        date.innerText = "Released Date: " + data.Released;
+
+        let title = document.createElement("p");
+        title.innerText = data.Title;
+
+        let imdb = document.createElement("p");
+        imdb.innerText = "IMDb Rating: " + data.imdbRating;
+
+        let plot = document.createElement("p");
+        plot.innerText = "Plot: " + data.Plot;
+
+
+        let actors = document.createElement("p");
+        actors.innerText = "Actors: " + data.Actors;
+
+        let rating = document.createElement("div");
+        let h4 = document.createElement("h4");
+        h4.innerText = "Ratings: "
+        rating.append(h4);
+        let rating_data = data.Ratings;
+        rating_data.forEach(e => {
+            let div = document.createElement("div");
+            let source = document.createElement("p");
+            source.innerText = e.Source + ": ";
+            let value = document.createElement("p");
+            value.innerText = e.Value;
+            div.append(source, value);
+            rating.append(div);
+        });
+
+        div2.append(title, date, imdb, plot, actors, rating);
+
+        container.append(div1, div2);
+
+        movie_area.append(container);
+    }
+
+</script>
+
+</html>

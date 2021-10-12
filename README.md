@@ -4,10 +4,9 @@ This is a basic movie searching page. It is using OMDb api for fetching movie da
 
 ---
 ## Features
-- Currently only shows one movie for a search.
+- Shows all movies for search term in form of list in a dropdown.
+- Clicking on any movie in dropdown will give further details about that movie.
 
 ---
 ### Features to be added soon
-- Show all movies related to search
-- Different page for overall search and movie specific details page
 - A watchlater or favourite list and an option to mark movies as watchlater or favourite.

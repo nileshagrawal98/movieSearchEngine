@@ -144,6 +144,9 @@
             margin: auto;
             color: white;
         }
+        #popular_container > h2{
+            text-align: center;
+        }
 
         #popular_movies {
             display: grid;
@@ -189,7 +192,7 @@
     <div id="search_bar">
 
         <div>
-            <input oninput="searchMovie()" type="text" id="movie" placeholder="Enter Movie Name"
+            <input oninput="searchMovie()" type="text" id="movie" placeholder="Enter Movie Name To Search"
                 onblur="removeResults()" />
             <div id="search_result"></div>
         </div>

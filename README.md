@@ -1,6 +1,6 @@
 # Movie Search Engine
 ---
-This is a basic movie searching page. It is using OMDb api for fetching movie data.
+This is a basic movie searching page. It is using OMDb and TMDB api for fetching movie data.
 
 ---
 ## Features

@@ -11,8 +11,8 @@
             background-color: #2C3E50;
         }
 
-        #search_bar {
-            max-width: 1400px;
+        #nav_bar {
+            max-width: 1140px;
             margin: auto;
             display: flex;
             justify-content: center;
@@ -20,13 +20,13 @@
             position: relative;
         }
 
-        #search_bar>div {
+        #search_bar {
             max-width: 800px;
             width: 80%;
             margin-right: 20px;
         }
 
-        #search_bar>div>input {
+        #search_bar>input {
             width: 100%;
             padding: 18px;
             color: #2980B9;
@@ -43,10 +43,10 @@
             overflow-y: scroll;
             color: white;
             position: absolute;
-            
+
         }
 
-        #search_result > div {
+        #search_result>div {
             display: flex;
             margin: 10px;
             background-color: #2C3E50;
@@ -71,18 +71,18 @@
             margin-right: 15px;
         }
 
-        #search_bar>button {
+        /* #nav_bar > button {
             background-color: #2980B9;
             border: 0;
             border-radius: 5px;
             color: white;
             padding: 10px;
             height: 39px;
-        }
+        } */
 
         #movie_area {
             display: none;
-            max-width: 1400px;
+            max-width: 1140px;
             background-color: #34495E;
             margin: auto;
             padding: 15px;
@@ -140,12 +140,13 @@
             margin: 10px 0px;
         }
 
-        #popular_container{
-            max-width: 1400px;
+        #popular_container {
+            max-width: 1140px;
             margin: auto;
             color: white;
         }
-        #popular_container > h2{
+
+        #popular_container>h2 {
             text-align: center;
         }
 
@@ -155,23 +156,23 @@
             gap: 10px;
         }
 
-        #popular_movies > div {
+        #popular_movies>div {
             background-color: #34495E;
             box-sizing: border-box;
             padding: 10px;
             cursor: pointer;
         }
 
-        #popular_movies > div:hover {
+        #popular_movies>div:hover {
             box-shadow: 0 0 18px #3d4b58ce;
         }
 
-        #popular_movies > div > p {
+        #popular_movies>div>p {
             margin-top: 2px;
             margin-bottom: 1px;
         }
 
-        #popular_movies > div > p:nth-of-type(2) {
+        #popular_movies>div>p:nth-of-type(2) {
             font-size: 12px;
         }
 
@@ -180,27 +181,152 @@
             margin-bottom: 2px;
         }
 
-        footer{
+        footer {
             max-width: 1400px;
             margin: auto;
             color: white;
             text-align: center;
+        }
+
+        #nav_right_btns{
+            display: flex;
+            column-gap: 10px;
+        }
+
+        #nav_right_btns > div{
+            display: flex;
+        }
+
+        .btn {
+            background-color: #2980B9;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: white;
+        }
+
+        .btn:hover {
+            background-color: #2f81b8;
+            box-shadow: 0 0 10px rgba(3, 18, 59, 0.37);
+            cursor: pointer;
+        }
+
+        #overlay {
+            display: none;
+            height: 100%;
+            overflow:hidden;
+        }
+
+        #overlay_background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay-content  {
+            width: 400px;
+            margin: auto;
+            margin-top: 10%;
+            background-color: #34495E;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(3, 18, 59, 0.37);
+            border-radius: 10px;
+            position: absolute;
+            top: 5%;
+            left:35%;
+            z-index: 4;
+        }
+
+        .overlay-content >h2 {
+            margin: 0 0 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .overlay-content >form {
+            max-width: 350px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+
+        .overlay-content >form>input {
+            padding: 5px;
+        }
+
+        .overlay-content >form>button {
+            padding: 10px;
+            width: 50%;
+            margin: auto;
+            margin-top: 5px;
+        }
+
+        .alert-success {
+            display: none;
+            border: 4px solid green;
+            border-radius: 10px;
+            max-width: 350px;
+            margin: 10px auto;
+            text-align: center;
+            color: green;
+            background-color: lightgreen;
+        }
+
+        .alert-failed {
+            display: none;
+            border: 4px solid rgb(250, 98, 98);
+            border-radius: 10px;
+            max-width: 350px;
+            margin: 10px auto;
+            text-align: center;
+            color: rgb(192, 25, 25);
+            background-color: rgb(233, 164, 164);
+        }
+
+        #nav_user  {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            column-gap: 5px;
+            height: 40px;
+            box-sizing: border-box;
+        }
+
+        #nav_user > p {
+            margin: 0;
         }
     </style>
 </head>
 
 <body>
 
-    <div id="search_bar">
+    <div id="nav_bar">
 
-        <div>
+        <div id="search_bar">
             <input oninput="searchMovie()" type="text" id="movie" placeholder="Enter Movie Name To Search"
                 onblur="removeResults()" />
             <div id="search_result"></div>
         </div>
 
+        <div id="nav_right_btns">
+            <div >
+                <button class="btn" onclick="showOverlay('signup')">Sign Up</button>
+            </div>
+            <div >
+                <button class="btn" onclick="showOverlay('login')">Login</button>
+            </div>
+        </div>
 
-        <!-- <button onclick="requestDataForTitle()">Search Movie</button> -->
+        <div id="nav_user" class="btn">
+            <img src="https://img.icons8.com/color/48/000000/circled-user-male-skin-type-4--v1.png" height="30px"/>
+            <p id="logged_username">Nilesh</p>
+        </div>
+
+        
 
     </div>
 
@@ -222,6 +348,39 @@
         <p>This page is using OMDb and TMDB API</p>
     </footer>
 
+    <!-- Overlays By default remains hidden -->
+    <div id="overlay" >
+        <div id="overlay_background" onclick="closeOverlay()"></div>
+        <div id="overlay_signup" class="overlay-content">
+            <h2>Sign Up</h2>
+            <div class="alert-success" id="signup_success">
+                <p>SignUp Successful</p>
+            </div>
+            <div class="alert-failed" id="signup_failed">
+                <p>SignUp Failed, User Already Exists</p>
+            </div>
+            <form onsubmit="SignUp(event)" id="signup_form">
+                <input type="text" id="signup_name" min="1" placeholder="Name" required>
+                <input type="mail" id="signup_mail" placeholder="Email" required>
+                <input type="password" id="signup_pass" min="6" placeholder="Password" required>
+                <input type="text" id="signup_username" min="1" placeholder="Username" required>
+                <input type="tel" id="signup_mobile" min="10" placeholder="Mobile Number" required>
+                <input type="text" id="signup_description" placeholder="Description">
+                <button type="submit" class="btn">SignUp</button>
+            </form>
+        </div>
+        <div id="overlay_login" class="overlay-content">
+            <h2>Login</h2>
+            <div class="alert-failed" id="login_failed">
+                <p>Login Failed, Invalid login creadentials</p>
+            </div>
+            <form onsubmit="Login(event)" id="login_form">
+                <input type="text" id="login_username" min="1" placeholder="Username" required>
+                <input type="password" id="login_pass" placeholder="Password" required>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
 
 </body>
 
@@ -421,7 +580,7 @@
 
     getPopularMovies();
 
-    function showPopularMovies(data){
+    function showPopularMovies(data) {
         let popular = document.getElementById("popular_movies");
 
         data.forEach(e => {
@@ -442,13 +601,167 @@
             name.innerText = e.title;
 
             let date = document.createElement("p");
-            date.innerText ="Release date: " + e.release_date;
+            date.innerText = "Release date: " + e.release_date;
 
             container.append(image, name, date);
 
             popular.append(container);
 
         })
+    }
+
+
+    function showOverlay(t) {
+        let overlay = document.getElementById("overlay");
+        overlay.style.display = "block";
+        if (t == "signup") {
+            document.getElementById("overlay_signup").style.display = "block";
+            document.getElementById("overlay_login").style.display = "none";
+        }else if(t == "login"){
+            document.getElementById("overlay_signup").style.display = "none";
+            document.getElementById("overlay_login").style.display = "block";
+        }
+        overlay.onscroll
+    }
+
+    //username: nilesh1998
+    //email: nilesh@gmail.com
+    //pass: 123456
+
+    //username: pinkpanther
+    //email: pinkpanther@mail.com
+    //pass: pink123
+
+    //username: sinchan
+    //email: sinchan@mail.com
+    //pass: sinchan123
+
+    async function SignUp(e) {
+        e.preventDefault();
+
+        let form = document.getElementById("signup_form");
+
+        let details = {
+            name: form.signup_name.value,
+            email: form.signup_mail.value,
+            password: form.signup_pass.value,
+            username: form.signup_username.value,
+            mobile: form.signup_mobile.value,
+            description: form.signup_description.value,
+        }
+
+        console.log(details);
+
+        details = JSON.stringify(details);
+
+        try {
+            let res = await fetch("https://masai-api-mocker.herokuapp.com/auth/register", {
+                method: "POST",
+                body: details,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            let data = await res.json();
+
+            if (data.error) {
+                showSignUpFailed();
+            } else {
+                showSignUpSuccessful();
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    function showSignUpFailed() {
+        // alert("failed");
+        document.getElementById("signup_failed").style.display = "block";
+        document.getElementById("signup_success").style.display = "none";
+    }
+
+    function showSignUpSuccessful() {
+        // alert("success");
+        document.getElementById("signup_failed").style.display = "none";
+        document.getElementById("signup_success").style.display = "block";
+    }
+
+    function closeOverlay() {
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    async function Login(e) {
+        e.preventDefault();
+
+        document.getElementById("login_failed").style.display = "none";
+
+        let form = document.getElementById("login_form");
+
+        let details = {
+            password: form.login_pass.value,
+            username: form.login_username.value,
+        }
+
+        console.log(details);
+
+        details = JSON.stringify(details);
+
+        try {
+            let res = await fetch("https://masai-api-mocker.herokuapp.com/auth/login", {
+                method: "POST",
+                body: details,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            let data = await res.json();
+
+            console.log(data);
+
+            if (data.error) {
+                showLoginFailed();
+            } else {
+                fetchUserData(form.login_username.value, data.token);
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    async function fetchUserData(username, token){
+        let res = await fetch(`https://masai-api-mocker.herokuapp.com/user/${username}`, {
+            headers: {
+                'Content-Type': 'application/json',
+
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        let data = await res.json();
+
+        console.log(data);
+
+        showLoggedUser(data);
+    }
+
+    function showLoginFailed(){
+        document.getElementById("login_failed").style.display = "block";
+    }
+
+    function showLoggedUser(data){
+        let nav_user = document.getElementById("nav_user");
+        nav_user.querySelector("#logged_username").innerText = data.username;
+        nav_user.style.display = "flex";
+
+        document.getElementById("nav_right_btns").style.display = "none";
+
+        closeOverlay();
     }
 
 </script>

@@ -1,5 +1,11 @@
 function loadNavbar(){
-    return `<div id="search_bar">
+    return `
+    <div id="nav_left_btns">
+    <div >
+        <button class="btn" id="home_btn">Home</button>
+    </div>
+</div>
+    <div id="search_bar">
     <input type="text" id="movie" placeholder="Enter Movie Name To Search" />
     <div id="search_result"></div>
 </div>

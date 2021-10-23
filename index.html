@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/nav_sign.css">
+    <link rel="stylesheet" href="styles/home.css">
+
     <title>Movies Search</title>
 </head>
 
@@ -25,9 +29,7 @@
         </div>
     </div>
 
-    <footer>
-        <p>This page is using OMDb and TMDB API</p>
-    </footer>
+    <footer id="page_footer"></footer>
 
     <!-- Overlays By default remains hidden -->
     <div id="overlay"></div>
@@ -38,7 +40,7 @@
 
     // Imports
 
-    import setFavicon from './components/favicon.js';
+    import {setFavicon, setFooter, setFont} from './components/icon_footer.js';
 
     import { loadNavbar } from './components/navbar.js';
 
@@ -52,6 +54,8 @@
 
     //Running initial page setting functions
     setFavicon();
+    setFooter();
+    setFont();
 
     document.getElementById("nav_bar").innerHTML = loadNavbar();
     setNavbar();
@@ -81,12 +85,16 @@
         data.forEach(e => {
             let container = document.createElement("div");
 
+            console.log(e);
+
             container.onclick = async function () {
-                let res = await fetch(`https://api.themoviedb.org/3/movie/${e.id}/external_ids?api_key=2b4489582d1f2b3d42ac22f7e28d7e07`);
-                let dat = await res.json();
-                // console.log(dat.imdb_id);
-                requestDataForTitle(dat.imdb_id);
-                window.scrollTo(0, 0);
+                // let res = await fetch(`https://api.themoviedb.org/3/movie/${e.id}/external_ids?api_key=2b4489582d1f2b3d42ac22f7e28d7e07`);
+                // let dat = await res.json();
+                // // console.log(dat.imdb_id);
+                // requestDataForTitle(dat.imdb_id);
+                // window.scrollTo(0, 0);
+                localStorage.setItem("movie_id",  e.id);
+                window.location.href = "movie.html";
             }
 
             let image = document.createElement("img");

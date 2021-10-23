@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/nav_sign.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/movie.css">
+
+    <title>Movie</title>
+</head>
+
+<body>
+
+    <div id="nav_bar"></div>
+    <!-- Overlays By default remains hidden -->
+    <div id="overlay"></div>
+
+    <div class="container" id="movie_details_container">
+        <div class="movie-container">
+            <div id="movie_title"></div>
+            <div class="mini-info-row">
+                <span class="info-tag" id="duration"></span>
+                <span class="info-tag" id="release_date"></span>
+            </div>
+            <div id="plot_small"></div>
+            <div class="options-row">
+                <button class="btn btn-play"> <img src="./images/icons8-play-30 (1).png" height="20rem"> Play Trailer</button>
+            </div>
+            <div class="detail-container">
+                <div class="detail-row">
+                    <span class="detail-type">Rating</span>
+                    <span class="detail-content" id="rating"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-type">Genre</span>
+                    <span class="detail-content" id="genre"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-type">Language</span>
+                    <span class="detail-content" id="language"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="page_footer"></footer>
+
+</body>
+
+</html>
+
+<script type="module">
+
+    // Imports
+
+    import { setFavicon, setFooter, setFont } from './components/icon_footer.js';
+
+    import { loadNavbar } from './components/navbar.js';
+
+    import { showSearchResult, requestDataForSearch, removeResults, setNavbar, searchMovie, showOverlay, requestDataForTitle, showMovie, showError } from './scripts/setting_navbar.js';
+
+    import { loadSignOverlay } from './components/signup_login.js';
+
+    import { setSignOverlay, SignUp, Login, closeOverlay, showSignUpFailed, showSignUpSuccessful, fetchUserData, showLoginFailed, showLoggedUser } from './scripts/setting_signup_login.js';
+
+
+
+    //Running initial page setting functions
+    setFavicon();
+    setFooter();
+    setFont();
+
+    document.getElementById("nav_bar").innerHTML = loadNavbar();
+    setNavbar();
+
+    document.getElementById("overlay").innerHTML = loadSignOverlay();
+    setSignOverlay();
+
+    let movie_id = localStorage.getItem("movie_id");
+    async function fetchMovieData(movie_id) {
+
+        let res = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=2b4489582d1f2b3d42ac22f7e28d7e07&language=en-US`);
+
+        let data = await res.json();
+
+        console.log(data);
+
+        setMovieData(data);
+    }
+
+    fetchMovieData(movie_id);
+
+    function setMovieData(movie) {
+
+        document.getElementById("movie_title").innerText = movie.title;
+
+        let runtime = movie.runtime;
+        let duration = "";
+        if (runtime >= 60) {
+            duration = `${Math.floor(runtime / 60)} h ${runtime % 60} min`
+        } else {
+            duration = runtime + " min";
+        }
+        document.getElementById("duration").innerText = duration;
+
+        document.getElementById("release_date").innerText = movie.release_date;
+
+        document.getElementById("plot_small").innerText = movie.overview;
+
+        document.getElementById("rating").innerText = movie.vote_average;
+
+        let genres = [];
+        movie.genres.forEach(({ name }) => {
+            genres.push(name);
+        })
+        document.getElementById("genre").innerText = genres.join(",");
+
+        let languages = [];
+        movie.spoken_languages.forEach(({ english_name }) => {
+            languages.push(english_name);
+        });
+        document.getElementById("language").innerText = languages.join(",");
+
+        setBgImg(movie.backdrop_path);
+
+    }
+
+    function setBgImg(path) {
+
+        document.getElementById("movie_details_container").style.background = "linear-gradient(90deg, #2c3e50, #2c3e5049) ," + `url(https://image.tmdb.org/t/p/w500${path}) no-repeat center center / cover`;
+    
+    }
+
+    // setBgImg();
+
+</script>

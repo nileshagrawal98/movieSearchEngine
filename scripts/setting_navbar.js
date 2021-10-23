@@ -85,6 +85,9 @@ function setNavbar() {
 
     document.getElementById("login_btn").addEventListener("click", () => {showOverlay('login')});
 
+    document.getElementById("home_btn").addEventListener("click", () => {window.location.href = "index.html"});
+
+
 }
 
 let timer;

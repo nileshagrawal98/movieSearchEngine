@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Movies Search</title>
+</head>
+
+<body>
+
+    <div id="nav_bar"></div>
+
+    <div id="movie_area">
+        <h2 id="movie_name"></h2>
+    </div>
+
+
+    <div id="popular_container">
+        <h2>Popular Movies</h2>
+
+        <div id="popular_movies">
+        </div>
+    </div>
+
+    <footer>
+        <p>This page is using OMDb and TMDB API</p>
+    </footer>
+
+    <!-- Overlays By default remains hidden -->
+    <div id="overlay"></div>
+
+</body>
+
+<script type="module">
+
+    // Imports
+
+    import setFavicon from './components/favicon.js';
+
+    import { loadNavbar } from './components/navbar.js';
+
+    import { showSearchResult, requestDataForSearch, removeResults, setNavbar, searchMovie, showOverlay, requestDataForTitle, showMovie, showError } from './scripts/setting_navbar.js';
+
+    import { loadSignOverlay } from './components/signup_login.js';
+
+    import { setSignOverlay, SignUp, Login, closeOverlay, showSignUpFailed, showSignUpSuccessful, fetchUserData, showLoginFailed, showLoggedUser } from './scripts/setting_signup_login.js';
+
+
+
+    //Running initial page setting functions
+    setFavicon();
+
+    document.getElementById("nav_bar").innerHTML = loadNavbar();
+    setNavbar();
+
+    document.getElementById("overlay").innerHTML = loadSignOverlay();
+    setSignOverlay();
+
+
+
+    async function getPopularMovies() {
+        //TMDB key:2b4489582d1f2b3d42ac22f7e28d7e07
+
+        let res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=2b4489582d1f2b3d42ac22f7e28d7e07&language=en-US&page=1`);
+
+        let data = await res.json();
+
+        // console.log(data.results);
+        showPopularMovies(data.results);
+
+    }
+
+    getPopularMovies();
+
+    function showPopularMovies(data) {
+        let popular = document.getElementById("popular_movies");
+
+        data.forEach(e => {
+            let container = document.createElement("div");
+
+            container.onclick = async function () {
+                let res = await fetch(`https://api.themoviedb.org/3/movie/${e.id}/external_ids?api_key=2b4489582d1f2b3d42ac22f7e28d7e07`);
+                let dat = await res.json();
+                // console.log(dat.imdb_id);
+                requestDataForTitle(dat.imdb_id);
+                window.scrollTo(0, 0);
+            }
+
+            let image = document.createElement("img");
+            image.src = `https://image.tmdb.org/t/p/w500${e.poster_path}`;
+
+            let name = document.createElement("p");
+            name.innerText = e.title;
+
+            let date = document.createElement("p");
+            date.innerText = "Release date: " + e.release_date;
+
+            container.append(image, name, date);
+
+            popular.append(container);
+
+        })
+    }
+
+</script>
+
+</html>
